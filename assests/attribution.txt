@@ -1,2 +1,5 @@
-[snake.ico] <a href="https://www.flaticon.com/free-stickers/infinity" title="infinity stickers">Infinity stickers created by Surfsup.Vector - Flaticon</a>
-[circle_microphone_lines_white.png] UIcons by <a href="https://www.flaticon.com/uicons">Flaticon</a>
+[snake.ico] UIcons by <a href="https://www.flaticon.com/free-stickers/infinity" title="infinity stickers">Infinity stickers created by Surfsup.Vector - Flaticon</a>
+[circle_microphone_lines.png] UIcons by <a href="https://www.flaticon.com/uicons">Flaticon</a>
+[folder.png] UIcons by <a href="https://www.flaticon.com/uicons">Flaticon</a>
+[settings.png] UIcons by <a href="https://www.flaticon.com/uicons">Flaticon</a>
+[home.png] UIcons by <a href="https://www.flaticon.com/free-icons/home-button" title="home button icons">Home button icons created by Freepik - Flaticon</a>
