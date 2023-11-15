@@ -1,55 +1,72 @@
 import tkinter as tk
 
-class NavbarFrame(tk.Frame):
+from src.gui.stylesheet import NAVIGATION, NORMAL_TAB, DISABLED_TAB, TAB_IMAGES, PLACEHOLDER
+
+class NavigationFrame(tk.Frame):
     def __init__(self, root):
-        super().__init__(master=root, bg=root.cget("bg"))
+        super().__init__(master=root)
+        self.config(NAVIGATION)
 
-        # Creating a photoimage object to use image     
-        self.home_image = tk.PhotoImage(file="assests/home.png")
-        self.setting_image = tk.PhotoImage(file="assests/settings.png")
-        self.folder_image = tk.PhotoImage(file="assests/folder.png")
+        self.current_tab = "home"
 
-        # Resizing image to fit on button 
-        self.home_image = self.home_image.subsample(10, 10)
-        self.setting_image = self.setting_image.subsample(10, 10)
-        self.folder_image = self.folder_image.subsample(10, 10)
+        # convert tab images
+        self.home_image = tk.PhotoImage(file=TAB_IMAGES["home"])
+        self.settings_image = tk.PhotoImage(file=TAB_IMAGES["settings"])
+        self.notes_image = tk.PhotoImage(file=TAB_IMAGES["notes"])
+
+        # resize tab images
+        self.home_image = self.home_image.subsample(TAB_IMAGES["resize_x"], TAB_IMAGES["resize_y"])
+        self.settings_image = self.settings_image.subsample(TAB_IMAGES["resize_x"], TAB_IMAGES["resize_y"])
+        self.notes_image = self.notes_image.subsample(TAB_IMAGES["resize_x"], TAB_IMAGES["resize_y"])
 
         # Create buttons in the navigation frame
-        self.home_button = tk.Button(
+        self.home_tab = tk.Button(
             self,
             image=self.home_image,
-            compound="left",
-            command=self.home_button_pressed,
         )
-        self.setting_button = tk.Button(
+        self.settings_tab = tk.Button(
             self,
-            image=self.setting_image,
-            compound="left",
-            command=self.setting_button_pressed,
+            image=self.settings_image,
         )
-        self.folder_button = tk.Button(
+        self.notes_tab = tk.Button(
             self,
-            text="Home",
-            image=self.folder_image,
-            command=self.folder_button_pressed,
+            image=self.notes_image,
+        )
+        self.placeholder = tk.Label(
+            self,
         )
         
-        # Place buttons in the navigation frame
-        self.home_button.grid(row=0, column=0, sticky="nsew")
-        self.folder_button.grid(row=0, column=1, sticky="nsew")
-        self.setting_button.grid(row=0, column=2, sticky="nsew")
+        self.actived_tab = self.home_tab
+
+        # place tabs in the navigation frame
+        self.home_tab.grid(row=0, column=0, sticky="nsew")
+        self.notes_tab.grid(row=0, column=1, sticky="nsew")
+        self.settings_tab.grid(row=0, column=2, sticky="nsew")
+        self.placeholder.grid(row=0, column=3, sticky="nsew")
 
         self.rowconfigure(0, weight=1)
         self.columnconfigure(0, weight=5)
         self.columnconfigure(1, weight=5)
         self.columnconfigure(2, weight=5)
         self.columnconfigure(3, weight=85)
+
+        # config tabs intial values
+        self.home_tab.config(DISABLED_TAB)
+        self.settings_tab.config(NORMAL_TAB)
+        self.notes_tab.config(NORMAL_TAB)
+        self.placeholder.config(PLACEHOLDER)
+        self.disabled_tab = self.home_tab
+
+        # set tabs command
+        self.home_tab.config(command=lambda : self.tab_pressed(self.home_tab, "home"))
+        self.settings_tab.config(command=lambda : self.tab_pressed(self.settings_tab, "settings"))
+        self.notes_tab.config(command=lambda : self.tab_pressed(self.notes_tab, "notes"))
     
-    def home_button_pressed(self):
-        print("Home Button Pressed")
+    def tab_pressed(self, disabled_tab: tk.Button, new_tab:str):
+        disabled_tab.config(DISABLED_TAB)
+        self.disabled_tab.config(NORMAL_TAB)
+        self.disabled_tab = disabled_tab
+        self.current_tab = new_tab
     
-    def setting_button_pressed(self):
-        print("Setting Button Pressed")
-    
-    def folder_button_pressed(self):
-        print("Folder Button Pressed")
+    def get_current_tab(self):
+        return self.current_tab
